@@ -3,10 +3,6 @@ services:
     name: chat-for-mac
     runtime: static
     staticPublishPath: ./public
-    headers:
-      - path: /Chat.zip
-        name: Content-Disposition
-        value: attachment; filename="Chat.zip"
     routes:
       # tinyurl.com/chat-for-mac points here by mistake; send it to the home page
       - type: redirect

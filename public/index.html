@@ -2,65 +2,121 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Chat for Mac</title>
-<meta name="description" content="3D chat rooms for Mac. Make your person, walk around, and chat.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#181a21">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Chat</title>
+<meta name="description" content="3D chat rooms in your browser. Make your person, walk around, and chat. Works on phones, Chromebooks and computers.">
 <link rel="icon" href="icon.png">
-<style>
-  :root { --bg: #14161c; --card: #1d2029; --text: #eef0f6; --muted: #9aa1b2; --accent: #3b9dff; }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: radial-gradient(1200px 600px at 50% -10%, #2b2f6b 0%, var(--bg) 60%); color: var(--text);
-         font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; }
-  main { max-width: 980px; margin: 0 auto; padding: 56px 16px 80px; }
-  header { text-align: center; }
-  header img { width: 150px; height: 150px; filter: drop-shadow(0 18px 30px rgba(0,0,0,.45)); }
-  h1 { font-size: 56px; margin: 10px 0 6px; letter-spacing: -1px; }
-  .tag { color: var(--muted); font-size: 21px; margin: 0 0 28px; }
-  .btn { display: inline-block; background: linear-gradient(180deg, #4aa8ff, #2f7fe8); color: #fff; text-decoration: none;
-         font-weight: 700; font-size: 20px; padding: 16px 34px; border-radius: 14px; box-shadow: 0 10px 30px rgba(59,157,255,.35); }
-  .btn:hover { filter: brightness(1.08); }
-  .small { color: var(--muted); font-size: 14px; margin-top: 12px; }
-  .shot { width: 100%; border-radius: 16px; margin: 44px 0 10px; box-shadow: 0 30px 70px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.08); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 34px 0; }
-  .card { background: var(--card); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 18px; }
-  .card b { display: block; font-size: 18px; margin-bottom: 4px; }
-  .card span { color: var(--muted); font-size: 15px; }
-  h2 { margin-top: 44px; }
-  ol { padding-left: 22px; } li { margin: 6px 0; }
-  code { background: #262a35; padding: 2px 6px; border-radius: 6px; }
-  .note { background: #20243a; border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 8px; color: #cfd5e6; font-size: 15px; }
-</style>
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
 </head>
 <body>
-<main>
-  <header>
-    <img src="icon.png" alt="Chat app icon">
-    <h1>Chat</h1>
-    <p class="tag">3D chat rooms for your Mac. Make your person, walk around, and talk.</p>
-    <a class="btn" href="Chat.zip" download>Download for Mac</a>
-    <p class="small">Free · macOS 14 or newer · Apple Silicon and Intel</p>
-  </header>
 
-  <img class="shot" src="lobby.png" alt="Chat main menu with your 3D person and public rooms">
+<!-- Main menu -->
+<div id="lobby" class="screen">
+  <section class="rooms">
+    <header class="head">
+      <h1><img src="icon.png" alt=""> Chat</h1>
+      <span id="status" class="status"><i></i><b>Connecting…</b></span>
+      <span class="grow"></span>
+      <label class="switch"><input type="checkbox" id="soundToggle"><span></span> Sounds</label>
+    </header>
 
-  <div class="grid">
-    <div class="card"><b>🧍 Your person</b><span>Pick your name, skin, hair and outfit.</span></div>
-    <div class="card"><b>🛋️ 3D rooms</b><span>Create a room and pick its style: Lounge, Gaming, Music, Chill, Art or Sports.</span></div>
-    <div class="card"><b>🎲 Random room</b><span>Jump into a room where people are hanging out.</span></div>
-    <div class="card"><b>🔑 Room codes</b><span>Make a private room and send the code to friends.</span></div>
-    <div class="card"><b>💬 Speech bubbles</b><span>Messages pop up over people's heads.</span></div>
-    <div class="card"><b>📜 Catch up</b><span>Join a room and see the last messages people sent.</span></div>
-    <div class="card"><b>💃 Emotes</b><span>Wave, dance and jump.</span></div>
+    <div class="bigbtns">
+      <button id="createBtn" class="primary big">＋ Create room</button>
+      <button id="randomBtn" class="big">🎲 Random room</button>
+    </div>
+
+    <h2>Rooms open now</h2>
+    <div id="roomList" class="roomgrid"></div>
+
+    <div class="card codebox">
+      <h3>Join with a code</h3>
+      <div class="row">
+        <input id="codeInput" placeholder="ROOM CODE" autocapitalize="characters" autocomplete="off" spellcheck="false">
+        <button id="joinBtn" class="primary">Join</button>
+      </div>
+      <p class="hint">Got a code from a friend? Type it here.</p>
+    </div>
+
+    <p class="hint">Chats go over the internet, and anyone with a room's code can read them. Phone numbers and emails are hidden automatically. Never share personal info.</p>
+  </section>
+
+  <aside class="person card">
+    <h2>Your person</h2>
+    <div id="preview"></div>
+    <input id="nameInput" maxlength="16" placeholder="Your name" autocomplete="off">
+    <div class="label">Skin</div><div class="swatches" data-k="skin"></div>
+    <div class="label">Hair</div><div class="stylebtns" id="hairStyles"></div>
+    <div class="label">Hair color</div><div class="swatches" data-k="hair"></div>
+    <div class="label">Shirt</div><div class="swatches" data-k="shirt"></div>
+    <div class="label">Pants</div><div class="swatches" data-k="pants"></div>
+    <p class="hint">Changes save automatically.</p>
+  </aside>
+</div>
+
+<!-- Create room -->
+<div id="createModal" class="modal hidden">
+  <div class="sheet">
+    <h2>Create a room</h2>
+    <div class="label">Name</div>
+    <input id="newName" maxlength="24" autocomplete="off">
+    <div class="label">Pick a style</div>
+    <div id="styleGrid" class="stylegrid"></div>
+    <label class="check"><input type="checkbox" id="newPublic" checked> Show it in the room list</label>
+    <p class="hint" id="pubHint">Anyone can find it and join.</p>
+    <div class="row end">
+      <button id="cancelCreate">Cancel</button>
+      <button id="doCreate" class="primary">Create</button>
+    </div>
   </div>
+</div>
 
-  <h2>How to install</h2>
-  <ol>
-    <li>Click <b>Download for Mac</b> and open <code>Chat.zip</code> to unzip it.</li>
-    <li>Drag <b>Chat</b> into your <b>Applications</b> folder.</li>
-    <li>The first time, Mac may say it can't check the app. Open <b>System Settings → Privacy &amp; Security</b>, scroll down, and click <b>Open Anyway</b> next to Chat. (On older Macs you can also right-click Chat and choose <b>Open</b>.)</li>
-  </ol>
+<!-- In a room -->
+<div id="roomScreen" class="screen hidden">
+  <div id="stage">
+    <canvas id="c"></canvas>
+    <div id="labels"></div>
+    <div class="topbar glass">
+      <span id="roomEmoji" class="emo"></span>
+      <b id="roomName"></b>
+      <button id="codeBtn" class="mono" title="Copy an invite link"></button>
+      <span id="pubBadge" class="badge"></span>
+      <span class="grow"></span>
+      <button id="chatToggle" class="mobile-only" title="Chat">💬<span id="unread" class="dot hidden"></span></button>
+      <button id="roomRandom" title="Random room">🎲<span class="wide-only"> Random</span></button>
+      <button id="leaveBtn" class="danger" title="Leave">🚪<span class="wide-only"> Leave</span></button>
+    </div>
+    <div id="peerCard" class="peercard glass hidden"></div>
+    <div class="bottombar glass">
+      <button class="emote" data-e="wave" title="Wave">👋</button>
+      <button class="emote" data-e="dance" title="Dance">💃</button>
+      <button class="emote" data-e="jump" title="Jump">🦘</button>
+      <input id="chatInput" maxlength="200" placeholder="Say something…" autocomplete="off" enterkeyhint="send">
+      <button id="emojiBtn" title="Emoji">😀</button>
+      <button id="sendBtn" class="primary">Send</button>
+    </div>
+    <div id="emojiPop" class="emojipop glass hidden"></div>
+  </div>
+  <aside id="side">
+    <div class="people">
+      <h3 id="peopleTitle">People here</h3>
+      <div id="peopleList"></div>
+    </div>
+    <div id="log"></div>
+    <p class="hint pad">Tap the floor (or use WASD / arrows) to walk. Tap someone to mute or wave.</p>
+  </aside>
+</div>
 
-  <p class="note">Chats go over the internet, and anyone with a room's code can read that room. Phone numbers and emails are hidden automatically. Don't share personal info.</p>
-</main>
+<div id="toast" class="toast hidden"></div>
+<script type="module" src="app.js"></script>
 </body>
 </html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chat for Mac</title>
+<meta name="description" content="3D chat rooms for Mac. Make your person, walk around, and chat.">
+<link rel="icon" href="icon.png">
+<style>
+  :root { --bg: #14161c; --card: #1d2029; --text: #eef0f6; --muted: #9aa1b2; --accent: #3b9dff; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: radial-gradient(1200px 600px at 50% -10%, #2b2f6b 0%, var(--bg) 60%); color: var(--text);
+         font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 56px 16px 80px; }
+  header { text-align: center; }
+  header img { width: 150px; height: 150px; filter: drop-shadow(0 18px 30px rgba(0,0,0,.45)); }
+  h1 { font-size: 56px; margin: 10px 0 6px; letter-spacing: -1px; }
+  .tag { color: var(--muted); font-size: 21px; margin: 0 0 28px; }
+  .btn { display: inline-block; background: linear-gradient(180deg, #4aa8ff, #2f7fe8); color: #fff; text-decoration: none;
+         font-weight: 700; font-size: 20px; padding: 16px 34px; border-radius: 14px; box-shadow: 0 10px 30px rgba(59,157,255,.35); }
+  .btn:hover { filter: brightness(1.08); }
+  .small { color: var(--muted); font-size: 14px; margin-top: 12px; }
+  .shot { width: 100%; border-radius: 16px; margin: 44px 0 10px; box-shadow: 0 30px 70px rgba(0,0,0,.5); border: 1px solid rgba(255,255,255,.08); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 34px 0; }
+  .card { background: var(--card); border: 1px solid rgba(255,255,255,.07); border-radius: 14px; padding: 18px; }
+  .card b { display: block; font-size: 18px; margin-bottom: 4px; }
+  .card span { color: var(--muted); font-size: 15px; }
+  h2 { margin-top: 44px; }
+  ol { padding-left: 22px; } li { margin: 6px 0; }
+  code { background: #262a35; padding: 2px 6px; border-radius: 6px; }
+  .note { background: #20243a; border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 8px; color: #cfd5e6; font-size: 15px; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon.png" alt="Chat app icon">
+    <h1>Chat</h1>
+    <p class="tag">3D chat rooms for your Mac. Make your person, walk around, and talk.</p>
+    <a class="btn" href="Chat.zip" download>Download for Mac</a>
+    <p class="small">Free · macOS 14 or newer · Apple Silicon and Intel</p>
+  </header>
+
+  <img class="shot" src="lobby.png" alt="Chat main menu with your 3D person and public rooms">
+
+  <div class="grid">
+    <div class="card"><b>🧍 Your person</b><span>Pick your name, skin, hair and outfit.</span></div>
+    <div class="card"><b>🛋️ 3D rooms</b><span>Six public rooms, each with its own style.</span></div>
+    <div class="card"><b>🎲 Random room</b><span>Jump into a room where people are hanging out.</span></div>
+    <div class="card"><b>🔑 Room codes</b><span>Make a private room and send the code to friends.</span></div>
+    <div class="card"><b>💬 Speech bubbles</b><span>Messages pop up over people's heads.</span></div>
+    <div class="card"><b>💃 Emotes</b><span>Wave, dance and jump.</span></div>
+  </div>
+
+  <h2>How to install</h2>
+  <ol>
+    <li>Click <b>Download for Mac</b> and open <code>Chat.zip</code> to unzip it.</li>
+    <li>Drag <b>Chat</b> into your <b>Applications</b> folder.</li>
+    <li>The first time, Mac may say it can't check the app. Open <b>System Settings → Privacy &amp; Security</b>, scroll down, and click <b>Open Anyway</b> next to Chat. (On older Macs you can also right-click Chat and choose <b>Open</b>.)</li>
+  </ol>
+
+  <p class="note">Chats go over the internet, and anyone with a room's code can read that room. Phone numbers and emails are hidden automatically. Don't share personal info.</p>
+</main>
+</body>
+</html>
